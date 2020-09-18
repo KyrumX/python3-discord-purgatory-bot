@@ -1,11 +1,14 @@
-import discord
+import logging
+import os
+
 from discord.ext import commands
 from discord.ext.commands import has_permissions, CheckFailure
+from dotenv import load_dotenv
 
-from secretkey import secret_key
+from cogs.info import Info
+from cogs.welcome import Welcome
 
 bot = commands.Bot(command_prefix="/")
-
 
 @bot.event
 async def on_ready():
@@ -44,4 +47,13 @@ async def list_error(ctx, error):
         msg = "You do not have permission for this command, {}".format(ctx.message.author.mention)
         await ctx.send(msg)
 
-bot.run(secret_key)
+# Logging
+log = logging.getLogger('LOG')
+log.setLevel(logging.INFO)
+
+# Load .env
+load_dotenv()
+TOKEN = os.getenv("DISCORD_TOKEN")
+bot.add_cog(Welcome(bot))
+bot.add_cog(Info(bot))
+bot.run(TOKEN)
