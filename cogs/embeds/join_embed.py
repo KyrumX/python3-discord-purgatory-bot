@@ -1,20 +1,14 @@
-import datetime
-
 from discord import Embed, Color, Member
 
-from cogs.embeds.base_info_embed import BaseInfoEmbed
-from utils.member_utils import build_full_user
+from cogs.embeds.event_embed import EventEmbed
 
 
-class JoinEmbed(BaseInfoEmbed):
-    def __init__(self):
-        super().__init__()
+class JoinEmbed(EventEmbed):
+    color = Color.blue()
+    event = "has joined the server"
 
-    def build_embed(self, member: Member, event: str) -> Embed:
-        embed = Embed()
-        embed.set_author(name=build_full_user(member))
-        embed.title = member.display_name + " " + event
+    def __init__(self, member: Member):
+        super().__init__(member=member, event=self.event, color=self.color)
 
-        embed.set_footer(text="User ID: " + member.id.__str__())
-
-        return embed
+    def build_embed(self, *args, **kwargs):
+        super().build_embed(*args, **kwargs)
