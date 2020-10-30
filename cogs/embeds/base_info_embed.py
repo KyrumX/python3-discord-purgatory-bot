@@ -7,7 +7,7 @@ class BaseInfoEmbed(BaseEmbed):
     color = Color.blue()
 
     def __init__(self):
-        super().__init__()
+        super().__init__(self.color)
 
     def build_embed(self, *args, **kwargs):
         self.embed.colour = self.color
