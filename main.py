@@ -6,11 +6,9 @@ from discord.ext.commands import has_permissions, CheckFailure
 from dotenv import load_dotenv
 import discord
 
-from cogs.info import Info
-from cogs.logging import Logging
-from cogs.welcome import Welcome
-
-bot = commands.Bot(command_prefix="/")
+intents = discord.Intents.default()
+intents.members = True
+bot = commands.Bot(command_prefix="/", intents=intents)
 
 initial_extensions = ['cogs.welcome',
                       'cogs.info']
