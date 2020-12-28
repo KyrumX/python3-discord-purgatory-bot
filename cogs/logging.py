@@ -4,10 +4,11 @@
 import os
 
 import discord
-from discord import Message
+from discord import Message, VoiceState, Member
 from discord.ext import commands
 
 from cogs.embeds.UpdatedMessageEmbed import UpdatedMessageEmbed
+from cogs.embeds.connect_embed import ConnectEmbed
 from cogs.embeds.deleted_message_embed import DeleteMessageEmbed
 from cogs.embeds.join_embed import JoinEmbed
 from cogs.embeds.sent_message_embed import SentMessageEmbed
@@ -85,6 +86,22 @@ class Logging(commands.Cog):
             await self.channel.send(
                 embed=message_embed.embed
             )
+
+    @commands.Cog.listener()
+    async def on_voice_state_update(self, member: Member, voice_before: VoiceState, voice_after: VoiceState):
+        """"
+        Event listener when a user updates their voice states.
+        Events: Join, Leave, AFK, etc.
+        """
+
+        if (voice_before.channel is None and voice_after is not None) or (voice_before.channel != voice_after.channel):
+            connect_channel_embed = ConnectEmbed(member, channel=voice_after.channel)
+            connect_channel_embed.build_embed()
+
+            await self.channel.send(
+                embed=connect_channel_embed.embed
+            )
+
 
 
 def setup(bot):
