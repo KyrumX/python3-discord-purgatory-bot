@@ -3,9 +3,9 @@ from discord import Color, Member, GroupChannel
 from cogs.embeds.event_embed import EventEmbed
 
 
-class ConnectEmbed(EventEmbed):
-    color = Color.dark_green()
-    event = "has connected to a channel"
+class DisconnectEmbed(EventEmbed):
+    color = Color.orange()
+    event = "has disconnected from a channel"
 
     def __init__(self, member: Member, channel: GroupChannel):
         super().__init__(member=member, event=self.event, color=self.color)

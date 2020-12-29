@@ -4,12 +4,13 @@
 import os
 
 import discord
-from discord import Message, VoiceState, Member
+from discord import Message, VoiceState, Member, GroupChannel
 from discord.ext import commands
 
 from cogs.embeds.UpdatedMessageEmbed import UpdatedMessageEmbed
 from cogs.embeds.connect_embed import ConnectEmbed
 from cogs.embeds.deleted_message_embed import DeleteMessageEmbed
+from cogs.embeds.disconnect_embed import DisconnectEmbed
 from cogs.embeds.join_embed import JoinEmbed
 from cogs.embeds.sent_message_embed import SentMessageEmbed
 
@@ -91,17 +92,36 @@ class Logging(commands.Cog):
     async def on_voice_state_update(self, member: Member, voice_before: VoiceState, voice_after: VoiceState):
         """"
         Event listener when a user updates their voice states.
-        Events: Join, Leave, AFK, etc.
+        Currently used events: Join, Leave
         """
 
-        if (voice_before.channel is None and voice_after is not None) or (voice_before.channel != voice_after.channel):
-            connect_channel_embed = ConnectEmbed(member, channel=voice_after.channel)
-            connect_channel_embed.build_embed()
+        if (voice_before.channel is None or voice_before.channel != voice_after.channel) and voice_after.channel \
+                is not None:
+            await self._on_connect_channel(member=member, channel=voice_after.channel)
+        elif voice_after.channel != voice_before.channel and voice_before.channel is not None:
+            await self._on_disconnect_channel(member=member, channel=voice_before.channel)
 
-            await self.channel.send(
-                embed=connect_channel_embed.embed
-            )
+    async def _on_connect_channel(self, member: Member, channel: GroupChannel):
+        """"
+        Create log entry for user joining a channel.
+        """
+        connect_channel_embed = ConnectEmbed(member, channel=channel)
+        connect_channel_embed.build_embed()
 
+        await self.channel.send(
+            embed=connect_channel_embed.embed
+        )
+
+    async def _on_disconnect_channel(self, member: Member, channel: GroupChannel):
+        """"
+        Create log entry for user leaving a channel.
+        """
+        diconnect_channel_embed = DisconnectEmbed(member, channel=channel)
+        diconnect_channel_embed.build_embed()
+
+        await self.channel.send(
+            embed=diconnect_channel_embed.embed
+        )
 
 
 def setup(bot):
