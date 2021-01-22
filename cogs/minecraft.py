@@ -31,7 +31,7 @@ class Minecraft(commands.Cog):
         if server_online:
             await ctx.send('Server seems already up and running!')
         else:
-            subprocess.Popen([self.start_bat])
+            subprocess.Popen([self.start_bat], creationflags=subprocess.CREATE_NEW_CONSOLE)
             await ctx.send('Starting server, please wait a couple of minutes!')
 
 
