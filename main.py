@@ -14,6 +14,7 @@ bot = commands.Bot(command_prefix="/", intents=intents)
 initial_extensions = ['cogs.welcome',
                       'cogs.info']
 
+
 @bot.command(name='iloveyou', help='If you need some love <3')
 async def iloveyou(ctx):
     msg = "I love you too, {}".format(ctx.message.author.mention)
