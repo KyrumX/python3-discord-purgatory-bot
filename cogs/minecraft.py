@@ -5,7 +5,7 @@ from discord.ext import commands
 from mcstatus import MinecraftServer
 
 
-class MinecraftCog(commands.Cog):
+class Minecraft(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -36,4 +36,4 @@ class MinecraftCog(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(MinecraftCog(bot))
+    bot.add_cog(Minecraft(bot))
