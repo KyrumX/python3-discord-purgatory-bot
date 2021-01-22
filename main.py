@@ -4,16 +4,15 @@ import os
 from discord.ext import commands
 from discord.ext.commands import has_permissions, CheckFailure
 from dotenv import load_dotenv
+import discord
 
-from cogs.info import Info
-from cogs.welcome import Welcome
+intents = discord.Intents.default()
+intents.members = True
+intents.voice_states = True
+bot = commands.Bot(command_prefix="/", intents=intents)
 
-bot = commands.Bot(command_prefix="/")
-
-@bot.event
-async def on_ready():
-    print('We have logged in as {0.user}'.format(bot))
-
+initial_extensions = ['cogs.welcome',
+                      'cogs.info']
 
 @bot.command(name='iloveyou', help='If you need some love <3')
 async def iloveyou(ctx):
@@ -54,6 +53,17 @@ log.setLevel(logging.INFO)
 # Load .env
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
-bot.add_cog(Welcome(bot))
-bot.add_cog(Info(bot))
+
+# Load cogs
+if __name__ == '__main__':
+    for extension in initial_extensions:
+        bot.load_extension(extension)
+
+
+@bot.event
+async def on_ready():
+    print(f'\n\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion discord.py: {discord.__version__}\n')
+
+    bot.load_extension('cogs.logging')
+
 bot.run(TOKEN)
