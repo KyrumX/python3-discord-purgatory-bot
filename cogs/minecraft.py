@@ -26,8 +26,8 @@ class Minecraft(commands.Cog):
         pass
 
     @mc.command(help='[ADMIN ONLY] Start the Minecraft server, can only be used once ever 10 minutes')
-    @mc.cooldown(1, 10, commands.BucketType.default)
-    @mc.has_role("Administrator")
+    @commands.cooldown(1, 10, commands.BucketType.default)
+    @commands.has_role("Administrator")
     async def start(self, ctx):
         """"
         Command to start the Minecraft server, can only be used globally once every 10 minutes to prevent
