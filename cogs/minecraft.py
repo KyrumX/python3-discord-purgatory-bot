@@ -18,10 +18,25 @@ class Minecraft(commands.Cog):
 
         self.server = MinecraftServer.lookup(self.ip)
 
-    @commands.command()
-    @commands.has_role("Administrator")
-    async def startserver(self, ctx):
-        # TODO: Add time delay (e.g. command cannot be spammed!)
+    @commands.group(pass_context=True)
+    async def mc(self, ctx):
+        """"
+        Group command: mc
+        """
+        pass
+
+    @mc.command(help='[ADMIN ONLY] Start the Minecraft server, can only be used once ever 10 minutes')
+    @mc.cooldown(1, 10, commands.BucketType.default)
+    @mc.has_role("Administrator")
+    async def start(self, ctx):
+        """"
+        Command to start the Minecraft server, can only be used globally once every 10 minutes to prevent
+        spam during startup phase
+
+        Furthermore, this command can only be used by administrators\
+
+        Command: mc start
+        """
         try:
             self.server.ping()
             server_online = True
