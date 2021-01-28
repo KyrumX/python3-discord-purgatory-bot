@@ -18,16 +18,16 @@ class Minecraft(commands.Cog):
 
         self.server = MinecraftServer.lookup(self.ip)
 
-    @commands.group(pass_context=True, brief="Global command, use /mc help", description="Global command, use /mc help")
+    @commands.group(pass_context=True, brief="Global command, use /help mc", description="Global command, use /help mc")
     async def mc(self, ctx):
         """"
         Group command: mc
         """
         pass
 
-    @mc.command(brief='[ADMIN ONLY] Start the Minecraft server', description="Admin only command to start the Minecraft "
-                                                                             "server, can only be used once ever 10 "
-                                                                             "minutes")
+    @mc.command(brief='[ADMIN ONLY] Start the Minecraft server', description="Admin only command to start the "
+                                                                             "Minecraft server, can only be used once "
+                                                                             "ever 10 minutes")
     @commands.has_role("Administrator")
     @commands.cooldown(per=600, rate=1, type=commands.BucketType.default)
     async def start(self, ctx):
