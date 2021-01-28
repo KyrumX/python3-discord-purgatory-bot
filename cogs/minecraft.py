@@ -52,10 +52,11 @@ class Minecraft(commands.Cog):
             await ctx.send('Starting server, please wait a couple of minutes!')
 
     @mc.command(brief='Brief description here', description="Bigger description here I guess")
-    @commands.cooldown(per=1, rate=10, type=commands.BucketType.default)
     @commands.has_role("False King")
+    @commands.cooldown(per=600, rate=1, type=commands.BucketType.default)
     async def test(self, ctx):
         await ctx.send("Tested!")
+
 
 def setup(bot):
     bot.add_cog(Minecraft(bot))
