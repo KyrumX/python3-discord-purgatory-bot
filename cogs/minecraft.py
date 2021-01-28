@@ -25,8 +25,10 @@ class Minecraft(commands.Cog):
         """
         pass
 
-    @mc.command(help='[ADMIN ONLY] Start the Minecraft server, can only be used once ever 10 minutes')
-    @commands.cooldown(1, 10, commands.BucketType.default)
+    @mc.command(brief='[ADMIN ONLY] Start the Minecraft server', description="Admin only command to start the Minecraft "
+                                                                             "server, can only be used once ever 10 "
+                                                                             "minutes")
+    @commands.cooldown(per=1, rate=10, type=commands.BucketType.default)
     @commands.has_role("Administrator")
     async def start(self, ctx):
         """"
@@ -49,6 +51,11 @@ class Minecraft(commands.Cog):
             subprocess.Popen([self.start_bat], creationflags=subprocess.CREATE_NEW_CONSOLE)
             await ctx.send('Starting server, please wait a couple of minutes!')
 
+    @mc.command(brief='Brief description here', description="Bigger description here I guess")
+    @commands.cooldown(per=1, rate=10, type=commands.BucketType.default)
+    @commands.has_role("False King")
+    async def test(self, ctx):
+        await ctx.send("Tested!")
 
 def setup(bot):
     bot.add_cog(Minecraft(bot))
