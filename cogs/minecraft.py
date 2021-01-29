@@ -20,9 +20,7 @@ class Minecraft(commands.Cog):
 
     @commands.group(pass_context=True, brief="Global command, use /help mc", description="Global command, use /help mc")
     async def mc(self, ctx):
-        """"
-        Group command: mc
-        """
+        """The global group command of this cog, /mc (other commands)"""
         pass
 
     @mc.command(brief='[ADMIN ONLY] Start the Minecraft server', description="Admin only command to start the "
