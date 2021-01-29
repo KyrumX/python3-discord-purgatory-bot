@@ -12,7 +12,9 @@ intents.voice_states = True
 bot = commands.Bot(command_prefix="/", intents=intents)
 
 initial_extensions = ['cogs.welcome',
-                      'cogs.info']
+                      'cogs.info',
+                      'cogs.minecraft']
+
 
 @bot.command(name='iloveyou', help='If you need some love <3')
 async def iloveyou(ctx):
