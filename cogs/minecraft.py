@@ -15,8 +15,8 @@ class Minecraft(commands.Cog):
         if not self.ip or not self.start_bat:
             print("No IP or start bat file provided!")
             self.cog_unload()
-
-        self.server = MinecraftServer.lookup(self.ip)
+        else:
+            self.server = MinecraftServer.lookup(self.ip)
 
     @commands.group(pass_context=True, brief="Global command, use /help mc", description="Global command, use /help mc")
     async def mc(self, ctx):
