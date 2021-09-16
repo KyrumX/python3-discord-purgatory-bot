@@ -13,7 +13,8 @@ bot = commands.Bot(command_prefix="/", intents=intents)
 
 initial_extensions = ['cogs.welcome',
                       'cogs.info',
-                      'cogs.minecraft']
+                      'cogs.minecraft',
+                      'cogs.youtubeplayer']
 
 
 @bot.command(name='iloveyou', help='If you need some love <3')
